@@ -10,7 +10,7 @@ export function groupBoxes (captures, dex) {
     const naturalBox = Math.ceil((i + 1) / BOX_SIZE) - 1;
     let box = Math.max(naturalBox, all.length - 1);
 
-    if (dex.region === 'national' && capture.pokemon.box !== lastBox) {
+    if (!dex.regional && capture.pokemon.box !== lastBox) {
       box++;
     }
 
@@ -33,11 +33,4 @@ export function iconClass ({ national_id: nationalId, form }, dex) {
   };
 
   return classNames('pkicon', `pkicon-${padding(nationalId, 3)}`, classes);
-}
-
-export function regionCheck (pokemon, region) {
-  if (region === 'kalos') {
-    return Boolean(pokemon.central_kalos_id || pokemon.coastal_kalos_id || pokemon.mountain_kalos_id);
-  }
-  return Boolean(pokemon[`${region}_id`]);
 }

@@ -1,5 +1,6 @@
-import { Component } from 'react';
 import DocumentTitle from 'react-document-title';
+import throttle      from 'lodash/throttle';
+import { Component } from 'react';
 import { connect }   from 'react-redux';
 
 import { DexComponent }                           from './dex';
@@ -8,12 +9,13 @@ import { InfoComponent }                          from './info';
 import { NavComponent }                           from './nav';
 import { NotFoundComponent }                      from './not-found';
 import { ReloadComponent }                        from './reload';
+import { SCROLL_DEBOUNCE, SHOW_SCROLL_THRESHOLD } from './scroll';
 import { checkVersion }                           from '../actions/utils';
+import { clearPokemon, setCurrentPokemon }        from '../actions/pokemon';
 import { listCaptures }                           from '../actions/capture';
 import { retrieveDex, setCurrentDex }             from '../actions/dex';
 import { retrieveUser, setUser }                  from '../actions/user';
-import { clearPokemon, setCurrentPokemon }        from '../actions/pokemon';
-import { setRegion, setShowScroll, setShowShare } from '../actions/tracker';
+import { setShowScroll, setShowShare }            from '../actions/tracker';
 
 export class Tracker extends Component {
 
@@ -45,7 +47,6 @@ export class Tracker extends Component {
       retrieveUser,
       setCurrentDex,
       setCurrentPokemon,
-      setRegion,
       setShowScroll,
       setShowShare,
       setUser
@@ -55,7 +56,6 @@ export class Tracker extends Component {
 
     checkVersion();
     clearPokemon();
-    setRegion('national');
     setShowScroll(false);
     setShowShare(false);
     setCurrentDex(slug, username);
@@ -71,6 +71,16 @@ export class Tracker extends Component {
       this.setState({ ...this.state, loading: false });
     })
     .catch(() => this.setState({ ...this.state, loading: false }));
+  }
+
+  onScroll = () => {
+    const { setShowScroll, showScroll } = this.props;
+
+    if (!showScroll && this._tracker && this._tracker.scrollTop >= SHOW_SCROLL_THRESHOLD) {
+      setShowScroll(true);
+    } else if (showScroll && this._tracker && this._tracker.scrollTop < SHOW_SCROLL_THRESHOLD) {
+      setShowScroll(false);
+    }
   }
 
   render () {
@@ -95,8 +105,8 @@ export class Tracker extends Component {
           <NavComponent />
           <ReloadComponent />
           <div className="tracker">
-            <div className="tracker-left-column">
-              <DexComponent />
+            <div className="tracker-left-column" ref={(c) => this._tracker = c} onScroll={throttle(this.onScroll, SCROLL_DEBOUNCE)}>
+              <DexComponent onScrollButtonClick={() => this._tracker ? this._tracker.scrollTop = 0 : null} />
               <FooterComponent />
             </div>
             <InfoComponent />
@@ -108,8 +118,11 @@ export class Tracker extends Component {
 
 }
 
-function mapStateToProps ({ currentDex, currentUser, users }) {
-  return { dex: users[currentUser] && users[currentUser].dexesBySlug[currentDex] };
+function mapStateToProps ({ currentDex, currentUser, showScroll, users }) {
+  return {
+    dex: users[currentUser] && users[currentUser].dexesBySlug[currentDex],
+    showScroll
+  };
 }
 
 function mapDispatchToProps (dispatch) {
@@ -121,7 +134,6 @@ function mapDispatchToProps (dispatch) {
     retrieveUser: (username) => dispatch(retrieveUser(username)),
     setCurrentPokemon: (id) => dispatch(setCurrentPokemon(id)),
     setCurrentDex: (slug, username) => dispatch(setCurrentDex(slug, username)),
-    setRegion: (region) => dispatch(setRegion(region)),
     setShowScroll: (show) => dispatch(setShowScroll(show)),
     setShowShare: (show) => dispatch(setShowShare(show)),
     setUser: (user) => dispatch(setUser(user))

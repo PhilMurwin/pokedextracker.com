@@ -267,6 +267,11 @@ header {
   .header-row {
     @include flexbox();
     @include align-items(center);
+
+    .donated-flair {
+      margin-left: auto;
+      height: 18px;
+    }
   }
 
   h1 {
@@ -275,14 +280,6 @@ header {
     margin: 0;
     color: $brand-secondary;
     font-size: 40px;
-
-    .dex-indicator {
-      left: -20px;
-
-      .fa-star {
-        font-size: 12px;
-      }
-    }
   }
 
   h3 {
@@ -294,6 +291,12 @@ header {
       &:hover {
         color: lighten(#000, 25%);
       }
+    }
+
+    .donated-flair {
+      margin-left: 4px;
+      height: 15px;
+      vertical-align: middle;
     }
   }
 
@@ -369,84 +372,6 @@ header {
     span.fc-missing {
       color: $gray-light;
     }
-  }
-}
-
-.region-filter {
-  @include flexbox();
-
-  margin: 30px 0 20px;
-
-  div {
-    @include transition(all .1s ease-out);
-    @include flex-grow(1);
-
-    padding: 10px;
-    text-align: center;
-    background-color: $gray-light;
-    font-family: $font-secondary;
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-
-    &.active {
-      background-color: $brand-secondary-light;
-      color: #fff;
-    }
-
-    &:hover {
-      cursor: pointer;
-
-      &:not(.active) {
-        background-color: darken($gray-light, 5%);
-      }
-    }
-  }
-}
-
-.region-filter-mobile {
-  display: none;
-  position: relative;
-  min-width: 100px;
-  margin-left: 10px;
-
-  .dropdown > div,
-  .active {
-    padding: 7px;
-    text-align: left;
-    font-family: $font-secondary;
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-
-  .active {
-    @include flexbox();
-    @include justify-content(space-between);
-
-    background-color: $brand-secondary-light;
-    color: #fff;
-  }
-
-  .dropdown {
-    position: absolute;
-    width: 100px;
-    z-index: 1;
-
-    div {
-      border-top: 1px solid darken($gray-light, 5%);
-      background-color: $gray-light;
-
-      &:first-child {
-        border-top: none;
-      }
-    }
-  }
-
-  &:hover {
-    cursor: pointer;
   }
 }
 
@@ -628,14 +553,6 @@ header {
 
     .percentage {
       margin-top: 15px;
-    }
-
-    .region-filter {
-      display: none;
-    }
-
-    .region-filter-mobile {
-      display: block;
     }
   }
 

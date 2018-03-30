@@ -1,3 +1,29 @@
+#### 2.6.1 (2018-1-3)
+
+##### Bug Fixes
+
+* **box:** only show alolan box on national dexes (#291) ([52e161f7](https://github.com/robinjoseph08/pokedextracker.com/commit/52e161f7e80813d2a28fc65e2a3ac3ad17680d0c))
+
+### 2.6.0 (2018-1-2)
+
+##### New Features
+
+* **usum:** ultra sun ultra moon support (#290) ([9511fcb5](https://github.com/robinjoseph08/pokedextracker.com/commit/9511fcb5170ab40b031e4df913e5545ac140609c))
+* **donate:** add donation form (#279) ([312b12e5](https://github.com/robinjoseph08/pokedextracker.com/commit/312b12e5483a95c946f041bd229648a06063aa85))
+* **sprites:** update spritesheet and associated scss for usum (#289) ([121c904d](https://github.com/robinjoseph08/pokedextracker.com/commit/121c904d615babcad0b9afa02bbc8136f0f8654f))
+
+### 2.5.0 (2017-12-27)
+
+##### Chores
+
+* **game:** replace usage of generation/region with game/regional (#288) ([857d3ae6](https://github.com/robinjoseph08/pokedextracker.com/commit/857d3ae69cef6aed58c0b027d5d8836e435c8096))
+* **styles:** remove border radius from buttons ([f2f5bf0b](https://github.com/robinjoseph08/pokedextracker.com/commit/f2f5bf0b3ad1100549ae0b24b49683704f1f7115))
+* **deps:** upgrade a few react modules (#281) ([cdb5b7cc](https://github.com/robinjoseph08/pokedextracker.com/commit/cdb5b7ccd96c4e99aa9dd25cf7144479af7c944a))
+
+##### Bug Fixes
+
+* **locations:** add empty state to locations ([202b608d](https://github.com/robinjoseph08/pokedextracker.com/commit/202b608dbb0b4b6486cf5ed7be170ee50e2a40a6))
+
 #### 2.4.1 (2017-8-13)
 
 ##### Bug Fixes
